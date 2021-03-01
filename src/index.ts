@@ -4,7 +4,7 @@ import {
   readFile as readFileOrig,
   readdirSync,
   writeFileSync,
-  mkdirSync
+  mkdirSync,
 } from 'fs'
 import { join, resolve, dirname, basename } from 'path'
 import { dirSync } from 'tmp'
@@ -14,8 +14,28 @@ import { getAssetFolderAbsPath } from './assets/getAssetFolderAbsPath'
 import { getFileCID } from './cid/getFileCID'
 
 if (!module.parent) {
-  runMain(['base-avatars','base-exclusive','halloween_2019','xmas_2019','dcg_collection','mch_collection','dcl_launch','community_contest','stay_safe','dg_summer_2020','wonderzone_meteorchaser','dappcraft_moonminer','pm_outtathisworld','dgtble_headspace','moonshot_2020','ethermon_trainer','binance_us_collection', 'cz_mercernary','sugarclub_yumi'])
-  .catch(error => console.log(error, error.stack))
+  runMain([
+    /*'base-avatars',
+    'base-exclusive',
+    'halloween_2019',
+    'xmas_2019',
+    'dcg_collection',
+    'mch_collection',
+    'dcl_launch',
+    'community_contest',
+    'stay_safe',
+    'dg_summer_2020',
+    'wonderzone_meteorchaser',
+    'dappcraft_moonminer',
+    'pm_outtathisworld',
+    'dgtble_headspace',
+    'moonshot_2020',
+    'ethermon_trainer',
+    'binance_us_collection',
+    'cz_mercernary',
+    'sugarclub_yumi',*/
+    'e1337',
+  ]).catch((error) => console.log(error, error.stack))
 }
 
 export async function runMain(collectionFolders: string[]) {
@@ -32,7 +52,7 @@ export async function runMain(collectionFolders: string[]) {
     const assetFolders: string[] = []
     mapCategoryFolders[collectionFolder] = assetFolders
 
-    categoryFolders.forEach(category => {
+    categoryFolders.forEach((category) => {
       addFolderEntriesToArray(assetFolders, join(categoryFolderAbsPath, category))
     })
 
@@ -49,13 +69,13 @@ export async function runMain(collectionFolders: string[]) {
       assetFoldersAbsPath: assetFolders,
       workingDirAbsPath: workingFolder.name,
       contentBaseUrl: `https://content.decentraland.org/contents/`,
-      collectionName: collectionFolder
+      collectionName: collectionFolder,
     }
 
     const response = process.env['DEBUG_ASSET_PROCESSING']
       ? await serializeCallBuild(buildAssetsConfig)
       : await parallelCallAndBuild(buildAssetsConfig)
-    allResponses = [ ...allResponses, ...response ]
+    allResponses = [...allResponses, ...response]
   }
 
   const jsonResult = JSON.stringify(allResponses, null, 2)
@@ -74,34 +94,41 @@ export async function runMain(collectionFolders: string[]) {
       console.log('Generating content addressable files...')
       const assetFolders = mapCategoryFolders[collectionFolder]
       await Promise.all(
-        assetFolders.map(assetFolderAbsPath => scanFilesAndCopyWithHashName(assetFolderAbsPath.replace(categoryFolderAbsPath, workingFolder.name), distAbsPath))
+        assetFolders.map((assetFolderAbsPath) =>
+          scanFilesAndCopyWithHashName(
+            assetFolderAbsPath.replace(categoryFolderAbsPath, workingFolder.name),
+            distAbsPath
+          )
+        )
       )
     } catch (e) {
       console.error(`Error in ${collectionFolder}: ${e.stack}`)
     }
   }
-  console.log(JSON.stringify(
-    allResponses
-      .map((_, index) => {
-        if (_ === null) {
-          console.log(`Warning! Element ${index} of "allResponses" is null`)
-        }
-        return _
-      })
-      .filter(_ => !!_)
-      .map(_ => {
-        try {
-          return _.id
-        } catch (e) {
-          console.error(`Can't get element "id" of object ${JSON.stringify(_)}`)
-          throw e
-        }
-      })
-      .map(_ => _.split('/')[3])
-      .map(_ => ({ wearableId: _, maxIssuance: 0})),
-    null,
-    2
-  ))
+  console.log(
+    JSON.stringify(
+      allResponses
+        .map((_, index) => {
+          if (_ === null) {
+            console.log(`Warning! Element ${index} of "allResponses" is null`)
+          }
+          return _
+        })
+        .filter((_) => !!_)
+        .map((_) => {
+          try {
+            return _.id
+          } catch (e) {
+            console.error(`Can't get element "id" of object ${JSON.stringify(_)}`)
+            throw e
+          }
+        })
+        .map((_) => _.split('/')[3])
+        .map((_) => ({ wearableId: _, maxIssuance: 0 })),
+      null,
+      2
+    )
+  )
 
   console.log('Cleaning up temporary files...')
   workingFolder.removeCallback()
@@ -114,7 +141,7 @@ const writeFile = promisify(writeFileOrig)
 async function scanFilesAndCopyWithHashName(assetFolder: string, targetFolder: string) {
   const allFiles = await readDir(assetFolder)
   return Promise.all(
-    allFiles.map(async file => {
+    allFiles.map(async (file) => {
       const sourceFile = join(assetFolder, file)
       const content = await readFile(sourceFile)
       const cid = await getFileCID(content)
@@ -124,7 +151,7 @@ async function scanFilesAndCopyWithHashName(assetFolder: string, targetFolder: s
 }
 
 function addFolderEntriesToArray(array: string[], rootFolder: string) {
-  return readdirSync(rootFolder).map(entry => array.push(join(rootFolder, entry)))
+  return readdirSync(rootFolder).map((entry) => array.push(join(rootFolder, entry)))
 }
 
 type MultipleProcessAndBuildConfiguration = {
@@ -140,21 +167,33 @@ async function serializeCallBuild(config: MultipleProcessAndBuildConfiguration) 
     const asset = basename(folder)
     const category = dirname(basename(folder))
     console.log(`Building ${category}:${asset}`)
-    result.push(await callOrLogProcessAndBuild(folder, config.workingDirAbsPath, config.contentBaseUrl, config.collectionName))
+    result.push(
+      await callOrLogProcessAndBuild(folder, config.workingDirAbsPath, config.contentBaseUrl, config.collectionName)
+    )
   }
   return result
 }
 
 async function parallelCallAndBuild(config: MultipleProcessAndBuildConfiguration) {
   return await Promise.all(
-    config.assetFoldersAbsPath.map(assetFolder =>
+    config.assetFoldersAbsPath.map((assetFolder) =>
       callOrLogProcessAndBuild(assetFolder, config.workingDirAbsPath, config.contentBaseUrl, config.collectionName)
     )
   )
 }
 
-async function callOrLogProcessAndBuild(assetFolderAbsPath: string, workingDirAbsPath: string, contentBaseUrl: string, collectionName: string) {
-  return processAssetAndBuildAssetDescription(assetFolderAbsPath, workingDirAbsPath, contentBaseUrl, collectionName).catch(error => {
+async function callOrLogProcessAndBuild(
+  assetFolderAbsPath: string,
+  workingDirAbsPath: string,
+  contentBaseUrl: string,
+  collectionName: string
+) {
+  return processAssetAndBuildAssetDescription(
+    assetFolderAbsPath,
+    workingDirAbsPath,
+    contentBaseUrl,
+    collectionName
+  ).catch((error) => {
     console.log(
       `Error! Could not process asset ${basename(assetFolderAbsPath)} of category ${basename(
         dirname(assetFolderAbsPath)

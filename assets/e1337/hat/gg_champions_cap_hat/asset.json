@@ -5,8 +5,8 @@
   },
   "tags": ["GG", "Champions"],
   "category": "hat",
-  "replaces": [""],
-  "hides": ["hair", "hat", "helmet"],
+  "replaces": ["helmet"],
+  "hides": ["hair"],
   "main": [
     {
       "type": "BaseMale",

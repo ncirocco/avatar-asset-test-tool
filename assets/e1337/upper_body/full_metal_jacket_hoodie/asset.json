@@ -1,5 +1,6 @@
 {
   "name": "e1337_hoodi_linetang_upper_body",
+  "baseUrl": "https://avatar-asset-test-tool-ncirocco.vercel.app/",
   "i18n": {
     "en": "Full Metal Jacket Hoddie"
   },

@@ -1,0 +1,20 @@
+{
+  "name": "e1337_gg_champions_cap_hat",
+  "i18n": {
+    "en": "GG Champions Cap"
+  },
+  "tags": ["GG", "Champions"],
+  "category": "hat",
+  "replaces": [""],
+  "hides": ["hair", "hat", "helmet"],
+  "main": [
+    {
+      "type": "BaseMale",
+      "model": "gg_champions_cap.glb",
+      "overrideReplaces": [],
+      "overrideHides": []
+    }
+  ],
+  "rarity": "legendary",
+  "description": "E1337 GG Champions Cap"
+}

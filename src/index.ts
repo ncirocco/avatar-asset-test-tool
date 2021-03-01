@@ -15,7 +15,7 @@ import { getFileCID } from './cid/getFileCID'
 
 if (!module.parent) {
   runMain([
-    /*'base-avatars',
+    'base-avatars',
     'base-exclusive',
     'halloween_2019',
     'xmas_2019',
@@ -33,7 +33,7 @@ if (!module.parent) {
     'ethermon_trainer',
     'binance_us_collection',
     'cz_mercernary',
-    'sugarclub_yumi',*/
+    'sugarclub_yumi',
     'e1337',
   ]).catch((error) => console.log(error, error.stack))
 }

@@ -1,6 +1,5 @@
 {
   "name": "e1337_hoodi_linetang_upper_body",
-  "baseUrl": "https://avatar-asset-test-tool-ncirocco.vercel.app/",
   "i18n": {
     "en": "Full Metal Jacket Hoddie"
   },
@@ -11,7 +10,13 @@
   "main": [
     {
       "type": "BaseMale",
-      "model": "full_metal_jacket_hoodie.glb",
+      "model": "full_metal_jacket_hoodie_m.glb",
+      "overrideReplaces": [],
+      "overrideHides": []
+    },
+    {
+      "type": "BaseFemale",
+      "model": "full_metal_jacket_hoodie_f.glb",
       "overrideReplaces": [],
       "overrideHides": []
     }

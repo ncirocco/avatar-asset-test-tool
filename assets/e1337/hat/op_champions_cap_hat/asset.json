@@ -1,26 +1,26 @@
 {
-  "name": "e1337_gg_champions_cap_hat",
+  "name": "e1337_op_champions_cap_hat",
   "i18n": {
-    "en": "GG Champions Cap"
+    "en": "OP Champions Cap"
   },
-  "tags": ["GG", "Champions"],
+  "tags": ["OP", "Champions"],
   "category": "hat",
   "replaces": ["helmet"],
   "hides": ["hair"],
   "main": [
     {
       "type": "BaseMale",
-      "model": "gg_champions_cap.glb",
+      "model": "op_champions_cap.glb",
       "overrideReplaces": [],
       "overrideHides": []
     },
     {
       "type": "BaseFemale",
-      "model": "gg_champions_cap.glb",
+      "model": "op_champions_cap.glb",
       "overrideReplaces": [],
       "overrideHides": []
     }
   ],
   "rarity": "legendary",
-  "description": "E1337 GG Champions Cap"
+  "description": "E1337 OP Champions Cap"
 }

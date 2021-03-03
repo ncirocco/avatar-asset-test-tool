@@ -1,7 +1,7 @@
 {
-  "name": "e1337_gold_elite_t_shirt_linetang_upper_body",
+  "name": "e1337_stealth_elite_t_shirt_linetang_upper_body",
   "i18n": {
-    "en": "Gold Elite T-Shirt"
+    "en": "Stealth Elite T-Shirt"
   },
   "tags": ["t-shirt", "elite"],
   "category": "upper_body",
@@ -10,17 +10,17 @@
   "main": [
     {
       "type": "BaseMale",
-      "model": "gold_elite_t_shirt_m.glb",
+      "model": "stealth_elite_t_shirt_m.glb",
       "overrideReplaces": [],
       "overrideHides": []
     },
     {
       "type": "BaseFemale",
-      "model": "gold_elite_t_shirt_f.glb",
+      "model": "stealth_elite_t_shirt_f.glb",
       "overrideReplaces": [],
       "overrideHides": []
     }
   ],
   "rarity": "legendary",
-  "description": "E1337 Gold Elite T-Shirt"
+  "description": "E1337 Stealth Elite T-Shirt"
 }
